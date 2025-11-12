@@ -11,7 +11,7 @@ Model name is converted to lowercase for the collection name:
 - BlogPost -> "blogs" collection
 """
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, EmailStr
 from typing import Optional
 
 # Example schemas (replace with your own):
@@ -22,7 +22,7 @@ class User(BaseModel):
     Collection name: "user" (lowercase of class name)
     """
     name: str = Field(..., description="Full name")
-    email: str = Field(..., description="Email address")
+    email: EmailStr = Field(..., description="Email address")
     address: str = Field(..., description="Address")
     age: Optional[int] = Field(None, ge=0, le=120, description="Age in years")
     is_active: bool = Field(True, description="Whether user is active")
@@ -37,6 +37,30 @@ class Product(BaseModel):
     price: float = Field(..., ge=0, description="Price in dollars")
     category: str = Field(..., description="Product category")
     in_stock: bool = Field(True, description="Whether product is in stock")
+
+# Daily updates posted by students/staff
+class Post(BaseModel):
+    """
+    Daily updates collection
+    Collection name: "post"
+    """
+    author: str = Field(..., description="Name of the poster")
+    title: str = Field(..., description="Title of the update")
+    content: str = Field(..., description="Body text of the update")
+    tag: Optional[str] = Field(None, description="Optional tag like academics, sports, fest")
+
+# Events with basic schedule details
+class Event(BaseModel):
+    """
+    Events collection
+    Collection name: "event"
+    """
+    name: str = Field(..., description="Event name")
+    description: str = Field(..., description="Short description")
+    date: str = Field(..., description="ISO date string e.g. 2025-05-01")
+    time: Optional[str] = Field(None, description="HH:MM 24h format")
+    venue: Optional[str] = Field(None, description="Event venue/location")
+    organizer: Optional[str] = Field(None, description="Organizer name or club")
 
 # Add your own schemas here:
 # --------------------------------------------------
